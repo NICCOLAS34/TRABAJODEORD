@@ -1,8 +1,4 @@
-arq = open('gam.dat', "rb")
-from ignorarep import *
-
-
-def gen(arq) -> tuple[list, list]:
+def gen(arq) -> list:
 
     registros = []
 
@@ -12,7 +8,7 @@ def gen(arq) -> tuple[list, list]:
 
         contador = 0
         id = b""
-        publi = b""
+        genero = b""
 
         tamint = int.from_bytes(tam, byteorder='little')
         ondecomeca = arq.tell()
@@ -26,22 +22,22 @@ def gen(arq) -> tuple[list, list]:
         while c:
             if c == b"|":
                 contador += 1
-                if contador == 3:
+                if contador == 2:
                     c = arq.read(1)
                     while c != b"|":
-                        publi += c
+                        genero += c
                         c = arq.read(1)
                     break
             c = arq.read(1)
 
         id = id.decode()
-        publi = publi.decode()
-        registros.append((id, publi))
+        genero = genero.decode()
+        registros.append((id, genero))
         arq.seek(ondecomeca + tamint)
         tam = arq.read(2)
 
     registros.sort(key=lambda x: x[1])
 
-    publiignorados = ignorarep(registros)
+    open("saida.dat", "w").write(str(registros))
 
-    return registros, publiignorados
+    return registros

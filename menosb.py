@@ -3,6 +3,7 @@ saida = open("primario.ind", "w")
 
 tam_bytes = entrada.read(2)
 
+indprim = []
 
 while tam_bytes != b"":
 
@@ -19,15 +20,12 @@ while tam_bytes != b"":
 
     idstr = id.decode()
 
-    saida.write(idstr)
-    saida.write("|")
-    saida.write(str(ponteiro))
-    saida.write("\n")
+    indprim.append((idstr, ponteiro))
 
     entrada.seek(ponteiro + tam + 2)
 
     tam_bytes = entrada.read(2)
-
+    
 entrada.close()
 saida.close()
 
