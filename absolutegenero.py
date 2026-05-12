@@ -3,9 +3,9 @@ saida = open("saida.dat", "w")
 from ignorarep import *
 
 
-def gen(arq) -> tuple[list, list]:
+def gen(arq) -> list[tuple[str, str]]:
 
-    registros = []
+    registrosgen = []
 
     tam = arq.read(2)
 
@@ -37,19 +37,16 @@ def gen(arq) -> tuple[list, list]:
 
         id = id.decode()
         genero = genero.decode()
-        registros.append((id, genero))
+        registrosgen.append((id, genero))
         arq.seek(ondecomeca + tamint)
+
         tam = arq.read(2)
 
-    registros.sort(key=lambda x: x[1])
-    
-    
+    registrosgen.sort(key=lambda x: x[1])
+    genignorados = ignorarep(registrosgen)
 
-    genignorados = ignorarep(registros)
 
-    saida.write(str(registros))
-
-    return genignorados, registros
+    return genignorados, registrosgen
 
   
 

@@ -4,7 +4,7 @@ from ignorarep import *
 
 def gen(arq) -> tuple[list, list]:
 
-    registros = []
+    registrospubli = []
 
     tam = arq.read(2)
 
@@ -26,7 +26,7 @@ def gen(arq) -> tuple[list, list]:
         while c:
             if c == b"|":
                 contador += 1
-                if contador == 3:
+                if contador == 4:
                     c = arq.read(1)
                     while c != b"|":
                         publi += c
@@ -36,12 +36,12 @@ def gen(arq) -> tuple[list, list]:
 
         id = id.decode()
         publi = publi.decode()
-        registros.append((id, publi))
+        registrospubli.append((id, publi))
         arq.seek(ondecomeca + tamint)
         tam = arq.read(2)
 
-    registros.sort(key=lambda x: x[1])
+    registrospubli.sort(key=lambda x: x[1])
 
-    publiignorados = ignorarep(registros)
+    publiignorados = ignorarep(registrospubli)
 
-    return registros, publiignorados
+    return registrospubli, publiignorados

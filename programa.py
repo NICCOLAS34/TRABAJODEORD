@@ -4,9 +4,11 @@ arq = open('gam.dat', "wb")
 
 
 
+saida = open("saida.dat", "w")
+from ignorarep import *
 
 
-def gen(arq) -> list[tuple[int, str]]:
+def gen(arq) -> list[tuple[str, str]]:
 
     registros = []
 
@@ -38,18 +40,23 @@ def gen(arq) -> list[tuple[int, str]]:
                     break
             c = arq.read(1)
 
-        
         id = id.decode()
         genero = genero.decode()
         registros.append((id, genero))
         arq.seek(ondecomeca + tamint)
+        
         tam = arq.read(2)
 
+    registros.sort(key=lambda x: x[1])
+    genignorados = ignorarep(registros)
 
-arq = open('gam.dat', "rb")
+
+    return genignorados, registros
+
+#==============================================================================================#
 
 
-def gen(arq) -> list[tuple[int, str]]:
+def gen(arq) -> tuple[list, list]:
 
     registros = []
 
@@ -81,23 +88,29 @@ def gen(arq) -> list[tuple[int, str]]:
                     break
             c = arq.read(1)
 
-        
         id = id.decode()
         publi = publi.decode()
         registros.append((id, publi))
         arq.seek(ondecomeca + tamint)
         tam = arq.read(2)
 
+    registros.sort(key=lambda x: x[1])
 
+    publiignorados = ignorarep(registros)
+
+    return registros, publiignorados
+
+#==============================================================================================#
 
 
 def geraid(arq: str) -> list[tuple[int, bytes]]:
 
     entrada = open('gam.dat', "rb")
-    saida = open("primario.ind", "wb")
+    saida = open("primario.ind", "w")
 
     tam_bytes = entrada.read(2)
 
+    indprim = []
 
     while tam_bytes != b"":
 
@@ -112,22 +125,19 @@ def geraid(arq: str) -> list[tuple[int, bytes]]:
             id += c
             c = entrada.read(1)
 
-        ponteirotexto = str(ponteiro).encode()
+        idstr = id.decode()
 
-        saida.write(id)
-        saida.write(b"|")
-        saida.write(ponteirotexto)
-        saida.write(b"\n")
+        indprim.append((idstr, ponteiro))
 
         entrada.seek(ponteiro + tam + 2)
 
         tam_bytes = entrada.read(2)
-
+        
     entrada.close()
     saida.close()
 
 
-
+#==============================================================================================#
 
 
 
