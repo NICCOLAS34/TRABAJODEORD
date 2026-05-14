@@ -2,7 +2,7 @@ arq = open('gam.dat', "rb")
 from ignorarep import *
 
 
-def gen(arq) -> tuple[list, list]:
+def publi(arq) -> tuple[list, list]:
 
     registrospubli = []
 
@@ -26,7 +26,7 @@ def gen(arq) -> tuple[list, list]:
         while c:
             if c == b"|":
                 contador += 1
-                if contador == 4:
+                if contador == 3:
                     c = arq.read(1)
                     while c != b"|":
                         publi += c

@@ -1,4 +1,5 @@
 #implementar busca por gênero
+
 arq = open('gam.dat', 'rb')
 
 def BP1(gen: str) -> str:

@@ -1,4 +1,4 @@
-#implementar busca por gênero
+#implementar busca por publicadora
 
 from invertedkist import*
 from absolutepupli import*
@@ -13,7 +13,7 @@ def BP2(publi: str) -> str:
 
         if publi == publiignorados[i][1]:       
 
-            ponteiro = publiignorados[i][0]       
+            ponteiro = publiignorados[i][0 ]       
 
             while ponteiro != -1:
 
